@@ -14,16 +14,17 @@ public class BackgroundDecorator extends AddOnDecorator {
 
     @Override
     public void createlayout() {
-        Imenudecorator.createlayout();
+        super.createlayout();
         createBackGround();
     }
 
 
     private void createBackGround(){
         Image backgroundImage;
-        backgroundImage=new Image("Menu/Open_Background_11.jpg",900 ,700,false,true);
+        backgroundImage=new Image("Menu/background.jpg",900 ,700,false,true);
         BackgroundImage background=new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         this.Imenudecorator.getLayout().setBackground(new Background(background));
+
     }
 
 }

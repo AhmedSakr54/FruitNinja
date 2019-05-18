@@ -3,24 +3,22 @@ package Menu;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainMenu  implements IMenu {
 
-    protected AnchorPane layout;
+    protected BorderPane layout;
     private Stage primaryStage;
     private Scene scene;
 
 
-//    public MainMenu() {
-//            createlayout();
-//    }
 
 
 
 
     private void intializeStage(){
-        layout=new AnchorPane();
+        layout=new BorderPane();
         scene=new Scene(layout,900,700);
         primaryStage=new Stage();
         primaryStage.setScene(scene);
@@ -34,11 +32,13 @@ public class MainMenu  implements IMenu {
     }
 
     @Override
-    public AnchorPane getLayout() {
+    public BorderPane getLayout() {
         return layout;
     }
 
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
+
 }
