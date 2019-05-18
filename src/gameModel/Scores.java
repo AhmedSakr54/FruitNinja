@@ -31,11 +31,15 @@ public class Scores{
         this.gameScore = gameScore;
         notifyObservers(2);
     }
+
+
     public void notifyObservers(int i){
         if(i == 1){
             theView.updateLives(this);
         }
         else
             theView.updateScores(this);
+
+
     }
 }

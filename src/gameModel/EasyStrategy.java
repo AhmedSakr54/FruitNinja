@@ -4,12 +4,12 @@ public class EasyStrategy implements ILevelDifficutlyStrategy {
 
     @Override
     public int getBombIntensityCap() {
-        return 5;
+        return 2;
     }
 
     @Override
     public int getDifficutly() {
-        return 500;
+        return 150;
     }
 
     @Override

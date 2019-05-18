@@ -9,11 +9,11 @@ public class NormalStrategy implements ILevelDifficutlyStrategy {
 
     @Override
     public int getDifficutly() {
-        return 300;
+        return 200;
     }
 
     @Override
     public int getFruitSpeed() {
-        return 6;
+        return 9;
     }
 }

@@ -20,7 +20,7 @@ public class ThrowableObject implements GameObject {
     private int fallingVelocity;
     private boolean sliced = false ;
     private boolean movedOffScreen = false;
-    private int maxHeight = 50;
+    private int maxHeight = 90;
     private boolean reachedMaxHeight = false;
 
     public boolean isReachedMaxHeight() {
@@ -163,6 +163,9 @@ public class ThrowableObject implements GameObject {
     @Override
     public ImageView[] getImageView() {
         return this.images;
+    }
+
+    public void throwObject(){
     }
 
 

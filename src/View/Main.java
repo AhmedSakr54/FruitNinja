@@ -17,6 +17,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         List<ThrowableObject> randomObjects = new ArrayList<>();
         GameView view = new GameView();
-        GameActions controller = new FirstController(view,new NormalStrategy());
+        GameActions controller = new FirstController(view,new HardStrategy());
     }
 }

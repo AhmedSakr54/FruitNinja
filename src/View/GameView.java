@@ -32,6 +32,7 @@ public class GameView{
     private Label scoreLabel;
     private Label lives;
     private Label score;
+    private Label minLabel , secLabel , separator;
     private Button resetBtn;
 
     public AnchorPane getPane() {
@@ -58,7 +59,7 @@ public class GameView{
         intializeStage();
         createBackground();
         createLabels();
-        //createButton();
+        createButton();
     }
     private void intializeStage(){
         primaryStage = new Stage();
@@ -70,15 +71,22 @@ public class GameView{
         pane.getChildren().addAll(path);
         scene = new Scene(pane,950,900);
         primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(e->{
+            System.exit(0);
+        });
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     private void createButton(){
         resetBtn = new Button("RESET");
-        resetBtn.setLayoutX(900);
+        resetBtn.setLayoutX(500);
         pane.getChildren().addAll(resetBtn);
     }
     private void createLabels(){
+        Label time = new Label("Timer");
+        minLabel = new Label("0");
+        secLabel = new Label("0");
+        separator = new Label(" : ");
         livesLabel = new Label("3");
         scoreLabel = new Label("0");
         lives = new Label("LIVES:");
@@ -87,6 +95,17 @@ public class GameView{
         score.setFont(new Font(50));
         livesLabel.setFont(new Font(50));
         scoreLabel.setFont(new Font(50));
+        minLabel.setFont(new Font(50));
+        secLabel.setFont(new Font(50));
+        separator.setFont(new Font(50));
+        time.setFont(new Font(50));
+        secLabel.setLayoutX(900);
+        secLabel.setLayoutY(70);
+        separator.setLayoutX(860);
+        separator.setLayoutY(70);
+        minLabel.setLayoutY(70);
+        minLabel.setLayoutX(840);
+        time.setLayoutX(780);
         lives.setLayoutX(0);
         livesLabel.setLayoutX(150);
         score.setLayoutY(50);
@@ -94,9 +113,13 @@ public class GameView{
         scoreLabel.setLayoutX(180);
         lives.setTextFill(Color.WHITE);
         score.setTextFill(Color.WHITE);
+        minLabel.setTextFill(Color.WHITE);
+        secLabel.setTextFill(Color.WHITE);
+        separator.setTextFill(Color.WHITE);
         scoreLabel.setTextFill(Color.WHITE);
         livesLabel.setTextFill(Color.WHITE);
-        pane.getChildren().addAll(livesLabel,scoreLabel,score,lives);
+        time.setTextFill(Color.WHITE);
+        pane.getChildren().addAll(livesLabel,scoreLabel,score,lives,minLabel,secLabel,separator,time);
     }
     private void createBackground(){
         Image backgroundImage=new Image("View/Resources/BackGrounds/background.jpg",900,900,false,true);
@@ -121,4 +144,21 @@ public class GameView{
     public void updateLives(Scores o){
         livesLabel.setText(Integer.toString(o.getNumOfLives()));
     }
+
+    public Label getMinLabel() {
+        return minLabel;
+    }
+
+    public void setMinLabel(Label minLabel) {
+        this.minLabel = minLabel;
+    }
+
+    public Label getSecLabel() {
+        return secLabel;
+    }
+
+    public void setSecLabel(Label secLabel) {
+        this.secLabel = secLabel;
+    }
+
 }
