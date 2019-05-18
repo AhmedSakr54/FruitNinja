@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 
 public class MainMenu  implements IMenu {
 
-    private AnchorPane layout;
+    protected AnchorPane layout;
     private Stage primaryStage;
     private Scene scene;
 
 
-    public MainMenu() {
-            createlayout();
-    }
+//    public MainMenu() {
+//            createlayout();
+//    }
 
 
 
@@ -33,6 +33,7 @@ public class MainMenu  implements IMenu {
         intializeStage();
     }
 
+    @Override
     public AnchorPane getLayout() {
         return layout;
     }
