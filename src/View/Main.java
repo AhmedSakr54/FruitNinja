@@ -1,6 +1,9 @@
 package View;
 
 import Controllers.*;
+import Menu.BackgroundDecorator;
+import Menu.IMenu;
+import Menu.MainMenu;
 import gameModel.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,6 +20,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         List<ThrowableObject> randomObjects = new ArrayList<>();
         GameView view = new GameView();
-        GameActions controller = new FirstController(view,new HardStrategy());
+        //IMenu Imenu=new MainMenu();
+        //MainMenu mainMenu=new MainMenu();
+//        IMenu Imenu =new BackgroundDecorator(new MainMenu());
+//        Imenu.createlayout();
+        GameActions controller = new FirstController(view,new EasyStrategy());
     }
 }

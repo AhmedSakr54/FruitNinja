@@ -5,17 +5,10 @@ import gameModel.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
@@ -24,17 +17,15 @@ public class FirstController implements GameActions {
     private List<ThrowableObject> randomObjects ;
     private ICommand command;
     private GameView theView;
+    private int difficultyIndex;
     private ILevelDifficutlyStrategy difficultyStrategy;
     private AnimationTimer gameTimer;
     private int bombIntensity;
     private int throwablesIntensity = 0;
     private int seconds = 0;
+    private ArrayList<String> highScores = new ArrayList<>();
     private Scores gameScores;
     private int buffer = 0;
-    private SlicingAdapter adapter;
-    private CareTaker careTaker;
-    private Originator originator;
-    private MouseEvent event1 ;
     private Timer timer = new Timer();
     private TimerTask task = new TimerTask() {
         @Override
@@ -59,7 +50,6 @@ public class FirstController implements GameActions {
     //Draws a line when mouse is dragged but still can't make the line cut the fruit
     EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
         public void handle(MouseEvent event) {
-            event1 = event;
             if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
                 theView.getPath().getElements().clear();
                 theView.getPath().getElements().add(new MoveTo(event.getX(), event.getY()));
@@ -80,8 +70,10 @@ public class FirstController implements GameActions {
         this.theView.getResetBtn().setOnAction(e->{
             resetGame();
         });
+
         this.gameScores = new Scores(3,0,this.theView);
         this.difficultyStrategy = difficutlyStrategy;
+        loadHighScore();
         createGameLoop();
         initTimer();
     }
@@ -115,6 +107,7 @@ public class FirstController implements GameActions {
                     updateObjectsLocation();
                     sliceObjects();
                     if (gameScores.getNumOfLives() == 0) {
+                        saveHighScore();
                         gameTimer.stop();
                         stopTimer();
                         theView.getPrimaryStage().close();
@@ -217,6 +210,7 @@ public class FirstController implements GameActions {
                 }
                 //The players loses instantly when they slice the red bomb
                 else {
+                    saveHighScore();
                     gameTimer.stop();
                     stopTimer();
                     theView.getPrimaryStage().close();
@@ -227,47 +221,12 @@ public class FirstController implements GameActions {
             }
         }
     }
-
     @Override
     public void saveGame() {
-        originator = new Originator();
-        careTaker = new CareTaker();
-        ArrayList<ThrowableObject> objects = new ArrayList<>();
-        for(int i = 0 ; i < this.randomObjects.size() ; i++){
-            if(this.randomObjects.get(i).getYLocation() < 900 && !this.randomObjects.get(i).isSliced()){
-                objects.add(this.randomObjects.get(i));
-            }
-        }
-        originator.setObjects(objects);
-        originator.setNumOflives(gameScores.getNumOfLives());
-        originator.setScores(gameScores.getGameScore());
-        originator.setSeconds(seconds);
-        originator.setMinutes(Integer.parseInt(theView.getMinLabel().getText()));
-        careTaker.addMemento(originator.save());
-
-        try{
-            FileOutputStream fos = new FileOutputStream(new File("saves.xml"));
-            XMLEncoder encoder = new XMLEncoder(fos);
-            encoder.writeObject(careTaker.getMemento());
-            encoder.close();
-            fos.close();
-        }catch (IOException e1){
-            e1.printStackTrace();
-        }
-
     }
 
     @Override
     public void loadGame() {
-        try{
-            FileInputStream fis = new FileInputStream(new File("saves.xml"));
-            XMLDecoder decoder = new XMLDecoder(fis);
-            this.originator = (Originator) decoder.readObject();
-            decoder.close();
-            fis.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -276,6 +235,61 @@ public class FirstController implements GameActions {
         theView.getPrimaryStage().close();
         gameTimer.stop();
         timer.cancel();
+    }
+
+    public boolean max(){
+        if(this.gameScores.getGameScore() > Integer.parseInt(this.theView.getHighScoreLabel().getText())){
+            //TODO close the game with a message saying you beat your old high score
+            return true;
+        }
+        return false;
+    }
+
+    public void saveHighScore(){
+        if(max()){
+            highScores.set(difficultyIndex,Integer.toString(this.gameScores.getGameScore()));
+            File file = new File("HighScore");
+            try {
+                FileWriter filewriter = new FileWriter(file);
+                for(int i = 0 ; i < highScores.size() ; i++){
+
+                    filewriter.write(highScores.get(i));
+                    if(i == highScores.size() - 1)
+                        break;
+                    filewriter.write("\n");
+                }
+                filewriter.close();
+            }catch(IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void loadHighScore(){
+        File file = new File("HighScore");
+        try{
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while (bufferedReader.ready()){
+                String line = bufferedReader.readLine();
+                highScores.add(line);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        if(difficultyStrategy instanceof EasyStrategy){
+            theView.getHighScoreLabel().setText(highScores.get(0));
+            difficultyIndex = 0;
+        }
+        else if(difficultyStrategy instanceof NormalStrategy){
+            theView.getHighScoreLabel().setText(highScores.get(1));
+            difficultyIndex = 1;
+        }
+        else {
+            theView.getHighScoreLabel().setText(highScores.get(2));
+            difficultyIndex = 2;
+        }
     }
 
 }

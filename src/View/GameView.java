@@ -32,7 +32,7 @@ public class GameView{
     private Label scoreLabel;
     private Label lives;
     private Label score;
-    private Label minLabel , secLabel , separator;
+    private Label minLabel , secLabel , separator , highScoreLabel;
     private Button resetBtn;
 
     public AnchorPane getPane() {
@@ -84,6 +84,7 @@ public class GameView{
     }
     private void createLabels(){
         Label time = new Label("Timer");
+        highScoreLabel = new Label("0");
         minLabel = new Label("0");
         secLabel = new Label("0");
         separator = new Label(" : ");
@@ -91,14 +92,20 @@ public class GameView{
         scoreLabel = new Label("0");
         lives = new Label("LIVES:");
         score = new Label("SCORE:");
+
+
         lives.setFont(new Font(50));
         score.setFont(new Font(50));
         livesLabel.setFont(new Font(50));
+        highScoreLabel.setFont(new Font(50));
         scoreLabel.setFont(new Font(50));
         minLabel.setFont(new Font(50));
         secLabel.setFont(new Font(50));
         separator.setFont(new Font(50));
         time.setFont(new Font(50));
+
+        highScoreLabel.setLayoutX(100);
+        highScoreLabel.setLayoutY(100);
         secLabel.setLayoutX(900);
         secLabel.setLayoutY(70);
         separator.setLayoutX(860);
@@ -111,6 +118,8 @@ public class GameView{
         score.setLayoutY(50);
         scoreLabel.setLayoutY(50);
         scoreLabel.setLayoutX(180);
+
+
         lives.setTextFill(Color.WHITE);
         score.setTextFill(Color.WHITE);
         minLabel.setTextFill(Color.WHITE);
@@ -119,7 +128,8 @@ public class GameView{
         scoreLabel.setTextFill(Color.WHITE);
         livesLabel.setTextFill(Color.WHITE);
         time.setTextFill(Color.WHITE);
-        pane.getChildren().addAll(livesLabel,scoreLabel,score,lives,minLabel,secLabel,separator,time);
+        highScoreLabel.setTextFill(Color.WHITE);
+        pane.getChildren().addAll(livesLabel,scoreLabel,score,lives,minLabel,secLabel,separator,time,highScoreLabel);
     }
     private void createBackground(){
         Image backgroundImage=new Image("View/Resources/BackGrounds/background.jpg",900,900,false,true);
@@ -161,4 +171,11 @@ public class GameView{
         this.secLabel = secLabel;
     }
 
+    public Label getHighScoreLabel() {
+        return highScoreLabel;
+    }
+
+    public void setHighScoreLabel(Label highScoreLabel) {
+        this.highScoreLabel = highScoreLabel;
+    }
 }
