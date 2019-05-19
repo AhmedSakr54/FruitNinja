@@ -1,12 +1,12 @@
 package Menu;
 
 
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public interface IMenu {
 
     public void createlayout();
 
-    public AnchorPane getLayout();
+    public BorderPane getLayout();
 
 }

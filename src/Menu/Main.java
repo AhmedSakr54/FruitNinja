@@ -1,8 +1,6 @@
 package sample;
 
-import Menu.BackgroundDecorator;
-import Menu.IMenu;
-import Menu.MainMenu;
+import Menu.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,9 +14,9 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        IMenu Imenu=new MainMenu();
-        //MainMenu mainMenu=new MainMenu();
-        Imenu =new BackgroundDecorator(Imenu);
+        IMenu Imenu =new ButtonsDecorator(new BackgroundDecorator(new MainMenu()));
+        Imenu=new LogoDecorator(Imenu);
+        Imenu=new AudioDecorator(Imenu);
         Imenu.createlayout();
     }
 }

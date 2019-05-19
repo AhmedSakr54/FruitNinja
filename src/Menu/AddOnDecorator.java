@@ -2,6 +2,8 @@ package Menu;
 
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 
 public abstract class AddOnDecorator implements IMenu {
     protected IMenu Imenudecorator;
@@ -15,7 +17,7 @@ public abstract class AddOnDecorator implements IMenu {
     }
 
     @Override
-    public AnchorPane getLayout(){
-        return null;
+    public BorderPane getLayout(){
+        return Imenudecorator.getLayout();
     }
 }
