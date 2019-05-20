@@ -26,8 +26,6 @@ public class DifficultyMenu {
 
         Text difficultyText=new Text("       ℂ\uD835\uDD59\uD835\uDD60\uD835\uDD60\uD835\uDD64\uD835\uDD56 \uD835\uDD3B\uD835\uDD5A\uD835\uDD57\uD835\uDD57\uD835\uDD5A\uD835\uDD54\uD835\uDD66\uD835\uDD5D\uD835\uDD65\uD835\uDD6A");
         difficultyText.setFont(new Font(50));
-        StackPane difficultyTextPane=new StackPane();
-        difficultyTextPane.setAlignment(Pos.CENTER);
         layout.setTop(difficultyText);
 
         Buttons easyButton=new Buttons("Easy");
