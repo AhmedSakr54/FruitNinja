@@ -7,6 +7,7 @@ public class ButtonsDecorator extends AddOnDecorator {
     Buttons newGameButton;
     Buttons loadButton;
     Buttons exitButton;
+    DifficultyMenu difficultyMenu=new DifficultyMenu();
 
 
     public ButtonsDecorator(IMenu Imenudecorator) {
@@ -28,12 +29,16 @@ public class ButtonsDecorator extends AddOnDecorator {
 
     public void createNewGameButton(){
         newGameButton=new Buttons("New Game");
+        newGameButton.setOnAction(e-> {
+            difficultyMenu.display();
+        });
     }
     public void createLoadButton(){
         loadButton=new Buttons("Load");
     }
     public void createExitButton(){
         exitButton=new Buttons("Exit");
+        exitButton.setOnAction(e->MainMenu.primaryStage.close());
     }
 
     public void addMenuButtons(){
