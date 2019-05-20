@@ -1,5 +1,10 @@
 package Menu;
 
+import Controllers.FirstController;
+import View.GameView;
+import gameModel.EasyStrategy;
+import gameModel.HardStrategy;
+import gameModel.NormalStrategy;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -36,6 +41,22 @@ public class DifficultyMenu {
         buttonsVbox.setSpacing(30);
         buttonsVbox.getChildren().addAll(easyButton,normalButton,hardButton);
         layout.setCenter(buttonsVbox);
+
+        easyButton.setOnAction(e->{
+            MainMenu.primaryStage.close();
+            window.close();
+            new FirstController(new GameView() , new EasyStrategy());
+        });
+        normalButton.setOnAction(e->{
+            MainMenu.primaryStage.close();
+            window.close();
+            new FirstController(new GameView() , new NormalStrategy());
+        });
+        hardButton.setOnAction(e->{
+            MainMenu.primaryStage.close();
+            window.close();
+            new FirstController(new GameView() , new HardStrategy());
+        });
 
         Text returnText=new Text(" ░R░e░t░u░r░n░ ░t░o░ ░M░e░n░u░ ");
         returnText.setFont(new Font(30));

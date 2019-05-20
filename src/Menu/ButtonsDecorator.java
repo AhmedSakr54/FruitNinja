@@ -4,10 +4,10 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 public class ButtonsDecorator extends AddOnDecorator {
-    Buttons newGameButton;
-    Buttons loadButton;
-    Buttons exitButton;
-    DifficultyMenu difficultyMenu=new DifficultyMenu();
+    private Buttons newGameButton;
+    private Buttons loadButton;
+    private Buttons exitButton;
+    private DifficultyMenu difficultyMenu=new DifficultyMenu();
 
 
     public ButtonsDecorator(IMenu Imenudecorator) {

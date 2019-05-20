@@ -10,7 +10,7 @@ import javafx.stage.StageStyle;
 public class MainMenu  implements IMenu {
 
     protected BorderPane layout;
-    public static Stage primaryStage=new Stage();
+    protected static Stage primaryStage=new Stage();
     private Scene scene;
 
 

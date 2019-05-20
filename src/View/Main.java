@@ -1,9 +1,7 @@
 package View;
 
 import Controllers.*;
-import Menu.BackgroundDecorator;
-import Menu.IMenu;
-import Menu.MainMenu;
+import Menu.*;
 import gameModel.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,11 +17,19 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         List<ThrowableObject> randomObjects = new ArrayList<>();
-        GameView view = new GameView();
+        //GameView view = new GameView();
         //IMenu Imenu=new MainMenu();
         //MainMenu mainMenu=new MainMenu();
-//        IMenu Imenu =new BackgroundDecorator(new MainMenu());
-//        Imenu.createlayout();
-        GameActions controller = new FirstController(view,new EasyStrategy());
+        //IMenu Imenu = new ButtonsDecorator(new BackgroundDecorator(new MainMenu()));
+
+        //Imenu.createlayout();
+        //AlertBox alert = new AlertBox();
+        //alert.display("Game Over" , "You lost,But you beat your highScore");
+        //GameActions controller = new FirstController(view,new HardStrategy());
+
+        IMenu Imenu =new ButtonsDecorator(new BackgroundDecorator(new MainMenu()));
+        Imenu=new LogoDecorator(Imenu);
+        Imenu=new AudioDecorator(Imenu);
+        Imenu.createlayout();
     }
 }

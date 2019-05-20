@@ -1,6 +1,9 @@
 package Controllers;
 
+import Menu.*;
+import View.AlertBox;
 import View.GameView;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gameModel.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -70,6 +73,9 @@ public class FirstController implements GameActions {
         this.theView.getResetBtn().setOnAction(e->{
             resetGame();
         });
+        this.theView.getBackBtn().setOnAction(e->{
+            back();
+        });
 
         this.gameScores = new Scores(3,0,this.theView);
         this.difficultyStrategy = difficutlyStrategy;
@@ -91,11 +97,8 @@ public class FirstController implements GameActions {
         theView.getPane().getChildren().addAll(randomObjects.getImageView()[0]);
         setCommand(new SliceCommand(randomObjects));
         this.command.execute();
-
         this.randomObjects.add(randomObjects);
         this.throwablesIntensity++;
-
-
     }
 
     public void createGameLoop(){
@@ -108,6 +111,7 @@ public class FirstController implements GameActions {
                     sliceObjects();
                     if (gameScores.getNumOfLives() == 0) {
                         saveHighScore();
+                        AudioDecorator.mediaPlayer.stop();
                         gameTimer.stop();
                         stopTimer();
                         theView.getPrimaryStage().close();
@@ -182,7 +186,6 @@ public class FirstController implements GameActions {
                 gameScores.setNumOfLives(gameScores.getNumOfLives() -1);
                 theView.getPane().getChildren().remove(randomObjects.get(i).getImageView()[0]);
                 randomObjects.remove(i);
-
             }
             //A decrease in the players life points when they slice the blue bombs
             if(randomObjects.get(i).isSliced() && randomObjects.get(i).getObjectType() == ObjectType.DAMAGEBOMB){
@@ -210,13 +213,12 @@ public class FirstController implements GameActions {
                 }
                 //The players loses instantly when they slice the red bomb
                 else {
+                    AudioDecorator.mediaPlayer.stop();
                     saveHighScore();
                     gameTimer.stop();
                     stopTimer();
                     theView.getPrimaryStage().close();
                     //Implement a GAMEOVER screen to display the game score of the player
-                    System.out.println("you lose");
-                    System.out.println("Your Score : " + gameScores.getGameScore());
                 }
             }
         }
@@ -237,18 +239,31 @@ public class FirstController implements GameActions {
         timer.cancel();
     }
 
+    public void back(){
+        theView.getPrimaryStage().close();
+        gameTimer.stop();
+        timer.cancel();
+        AudioDecorator.mediaPlayer.stop();
+        IMenu Imenu =new ButtonsDecorator(new BackgroundDecorator(new MainMenu()));
+        Imenu=new LogoDecorator(Imenu);
+        Imenu=new AudioDecorator(Imenu);
+        Imenu.createlayout();
+    }
+
     public boolean max(){
+        AlertBox alert = new AlertBox();
         if(this.gameScores.getGameScore() > Integer.parseInt(this.theView.getHighScoreLabel().getText())){
-            //TODO close the game with a message saying you beat your old high score
+            newHighScoreSequence(alert);
             return true;
         }
+        initializeGameOverSequence(alert);
         return false;
     }
 
     public void saveHighScore(){
+        File file = new File("HighScore");
         if(max()){
             highScores.set(difficultyIndex,Integer.toString(this.gameScores.getGameScore()));
-            File file = new File("HighScore");
             try {
                 FileWriter filewriter = new FileWriter(file);
                 for(int i = 0 ; i < highScores.size() ; i++){
@@ -263,9 +278,10 @@ public class FirstController implements GameActions {
                 e.printStackTrace();
             }
         }
+
     }
 
-    public void loadHighScore(){
+    public void loadHighScore() {
         File file = new File("HighScore");
         try{
             FileReader fileReader = new FileReader(file);
@@ -290,6 +306,29 @@ public class FirstController implements GameActions {
             theView.getHighScoreLabel().setText(highScores.get(2));
             difficultyIndex = 2;
         }
+    }
+
+    public void initializeGameOverSequence(AlertBox alertBox){
+        if(Integer.parseInt(theView.getHighScoreLabel().getText()) > 0) {
+            if (Integer.parseInt(theView.getHighScoreLabel().getText()) - gameScores.getGameScore() <= 5) {
+                alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Umm.. Thats Tuff XD");
+            } else if (Integer.parseInt(theView.getHighScoreLabel().getText()) - gameScores.getGameScore() > 50) {
+                alertBox.display("GameOver..", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "So I guess you weren't even trying this time");
+            } else
+                alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Better luck next time");
+        }
+        else
+            alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Better luck next time");
+
+    }
+
+    public void newHighScoreSequence(AlertBox alertBox){
+        if(Integer.parseInt(theView.getHighScoreLabel().getText()) > 0) {
+            alertBox.display("Game Over", "You lost,But you beat the highScore", "New HighScore : " + gameScores.getGameScore(), "Great Job!!");
+        }
+        else
+            alertBox.display("Game Over", "New HighScore : " + gameScores.getGameScore(), "Try to beat it next time" , " ");
+
     }
 
 }

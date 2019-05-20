@@ -20,7 +20,7 @@ public class BackgroundDecorator extends AddOnDecorator {
 
 
     private void createBackGround(){
-        Image backgroundImage=new Image("Menu/Resources/background.jpg",900 ,700,false,true);
+        Image backgroundImage=new Image("Menu/Resources/background.jpg",920 ,720,false,true);
         BackgroundImage background=new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
         this.Imenudecorator.getLayout().setBackground(new Background(background));
 

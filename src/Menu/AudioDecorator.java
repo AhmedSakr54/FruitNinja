@@ -7,6 +7,7 @@ import javafx.util.Duration;
 
 
 public class AudioDecorator extends AddOnDecorator {
+    public static MediaPlayer mediaPlayer;
 
     public AudioDecorator(IMenu Imenudecorator) {
         super(Imenudecorator);
@@ -20,7 +21,7 @@ public class AudioDecorator extends AddOnDecorator {
 
     public void createBackgroundMusic(){
         Media media=new Media(getClass().getResource("Background-Audio.mp3").toExternalForm());
-        MediaPlayer mediaPlayer=new MediaPlayer(media);
+        mediaPlayer=new MediaPlayer(media);
         mediaPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -28,5 +29,9 @@ public class AudioDecorator extends AddOnDecorator {
             }
         });
         mediaPlayer.play();
+    }
+
+    public void closeAudio(){
+        mediaPlayer.stop();
     }
 }

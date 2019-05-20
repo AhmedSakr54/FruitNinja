@@ -6,7 +6,7 @@ public class HardStrategy implements  ILevelDifficutlyStrategy {
     private Random random = new Random();
     @Override
     public int getBombIntensityCap() {
-        return random.nextInt(200) ;
+        return random.nextInt(20) ;
     }
 
     @Override

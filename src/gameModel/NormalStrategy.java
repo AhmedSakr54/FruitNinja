@@ -4,7 +4,7 @@ public class NormalStrategy implements ILevelDifficutlyStrategy {
 
     @Override
     public int getBombIntensityCap() {
-        return 20;
+        return 5;
     }
 
     @Override

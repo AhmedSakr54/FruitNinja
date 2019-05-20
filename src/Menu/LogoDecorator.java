@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 
 public class LogoDecorator extends AddOnDecorator {
 
-    ImageView ninjaImage;
-    Text logoText;
+    private ImageView ninjaImage;
+    private Text logoText;
 
     public LogoDecorator(IMenu Imenudecorator) {
         super(Imenudecorator);

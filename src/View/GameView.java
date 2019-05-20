@@ -34,6 +34,8 @@ public class GameView{
     private Label score;
     private Label minLabel , secLabel , separator , highScoreLabel;
     private Button resetBtn;
+    private Label HighScore;
+    private Button backBtn;
 
     public AnchorPane getPane() {
         return pane;
@@ -55,6 +57,7 @@ public class GameView{
     public Button getResetBtn(){
         return this.resetBtn;
     }
+    public Button getBackBtn(){return this.backBtn;}
     public GameView(){
         intializeStage();
         createBackground();
@@ -79,12 +82,16 @@ public class GameView{
     }
     private void createButton(){
         resetBtn = new Button("RESET");
-        resetBtn.setLayoutX(500);
-        pane.getChildren().addAll(resetBtn);
+        resetBtn.setLayoutX(400);
+        backBtn = new Button("BACK");
+        backBtn.setLayoutX(500);
+        pane.getChildren().addAll(backBtn,resetBtn);
+
     }
     private void createLabels(){
         Label time = new Label("Timer");
         highScoreLabel = new Label("0");
+        HighScore = new Label("HighScore:");
         minLabel = new Label("0");
         secLabel = new Label("0");
         separator = new Label(" : ");
@@ -98,13 +105,16 @@ public class GameView{
         score.setFont(new Font(50));
         livesLabel.setFont(new Font(50));
         highScoreLabel.setFont(new Font(50));
+        HighScore.setFont(new Font(50));
         scoreLabel.setFont(new Font(50));
         minLabel.setFont(new Font(50));
         secLabel.setFont(new Font(50));
         separator.setFont(new Font(50));
         time.setFont(new Font(50));
 
-        highScoreLabel.setLayoutX(100);
+        HighScore.setLayoutY(100);
+        HighScore.setLayoutX(0);
+        highScoreLabel.setLayoutX(250);
         highScoreLabel.setLayoutY(100);
         secLabel.setLayoutX(900);
         secLabel.setLayoutY(70);
@@ -119,7 +129,7 @@ public class GameView{
         scoreLabel.setLayoutY(50);
         scoreLabel.setLayoutX(180);
 
-
+        HighScore.setTextFill(Color.WHITE);
         lives.setTextFill(Color.WHITE);
         score.setTextFill(Color.WHITE);
         minLabel.setTextFill(Color.WHITE);
@@ -129,7 +139,7 @@ public class GameView{
         livesLabel.setTextFill(Color.WHITE);
         time.setTextFill(Color.WHITE);
         highScoreLabel.setTextFill(Color.WHITE);
-        pane.getChildren().addAll(livesLabel,scoreLabel,score,lives,minLabel,secLabel,separator,time,highScoreLabel);
+        pane.getChildren().addAll(HighScore,livesLabel,scoreLabel,score,lives,minLabel,secLabel,separator,time,highScoreLabel);
     }
     private void createBackground(){
         Image backgroundImage=new Image("View/Resources/BackGrounds/background.jpg",900,900,false,true);

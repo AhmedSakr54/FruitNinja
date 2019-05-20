@@ -1,8 +1,12 @@
 package gameModel;
 
+import javafx.animation.PauseTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import Controllers.*;
 
@@ -121,9 +125,9 @@ public class ThrowableObject implements GameObject {
 
     @Override
     public void slice() {
-        images[0].setOnMouseExited(e->{
-            sliced = true;
-        });
+      images[0].setOnMouseExited(e->{
+           sliced = true;
+       });
 
     }
 
@@ -159,14 +163,9 @@ public class ThrowableObject implements GameObject {
             rotate2.play();
         }
     }
-
     @Override
     public ImageView[] getImageView() {
         return this.images;
     }
-
-    public void throwObject(){
-    }
-
 
 }
