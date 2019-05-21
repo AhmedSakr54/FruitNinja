@@ -1,49 +1,77 @@
 package View;
 
+import Controllers.FirstController;
 import Menu.*;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import sun.font.TrueTypeFont;
 
 public class AlertBox {
+    static boolean i;
 
-    public void display(String title , String message1 , String message2 ,String message3){
-
-        Stage window = new Stage();
+    public boolean display(int score,String highScore){
+        Stage window=new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
 
-        window.setTitle(title);
-        window.setMinWidth(330);
-        window.setMinHeight(100);
+        BorderPane layout=new BorderPane();
+        Image backgroundImage=new Image("Menu/Resources/alertbox_background.png",900 ,700,false,true);
+        BackgroundImage background=new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,null);
+        layout.setBackground(new Background(background));
 
-        Label messageLabel1 = new Label(message1);
-        messageLabel1.setAlignment(Pos.CENTER);
-        messageLabel1.setLayoutX(0);
+        Label scoreMessage=new Label("Ｙｏｕｒ Ｓｃｏｒｅ ｉｓ "+score);
+        scoreMessage.setFont(new Font(30));
+        scoreMessage.setTextFill(Color.GREEN);
+        scoreMessage.setTextAlignment(TextAlignment.CENTER);
+        scoreMessage.setOnMouseEntered(e->{
+            scoreMessage.setCursor(Cursor.TEXT);
+        });
+        Label highscoreMessage=new Label(""+highScore);
+        highscoreMessage.setFont(new Font(20));
+        highscoreMessage.setTextAlignment(TextAlignment.CENTER);
+        highscoreMessage.setOnMouseEntered(e->{
+            highscoreMessage.setCursor(Cursor.TEXT);
+        });
+        VBox labelsVbox=new VBox();
+        labelsVbox.setAlignment(Pos.CENTER);
+        labelsVbox.setSpacing(5);
+        labelsVbox.getChildren().addAll(scoreMessage,highscoreMessage);
+        layout.setTop(labelsVbox);
 
-        Label messageLabel2 = new Label(message2);
-        messageLabel2.setAlignment(Pos.CENTER);
-        messageLabel2.setLayoutY(20);
-        messageLabel2.setLayoutX(0);
 
-        Label messageLabel3 = new Label(message3);
-        messageLabel3.setAlignment(Pos.CENTER);
-        messageLabel3.setLayoutX(0);
-        messageLabel3.setLayoutY(40);
+        Text text=new Text("\uD835\uDC9F\uD835\uDC5C \uD835\uDCB4\uD835\uDC5C\uD835\uDCCA \uD835\uDCB2\uD835\uDCB6\uD835\uDCC3\uD835\uDCC9 \uD835\uDCAF\uD835\uDC5C \uD835\uDC45\uD835\uDC52\uD835\uDCC8\uD835\uDCC9\uD835\uDCB6\uD835\uDCC7\uD835\uDCC9 ?");
+        text.setFont(new Font(20));
+        text.setOnMouseEntered(e->text.setCursor(Cursor.TEXT));
+        layout.setCenter(text);
 
-        Button okButton = new Button("OK");
-
-
-        okButton.setAlignment(Pos.CENTER);
-        okButton.setLayoutX(105);
-        okButton.setLayoutY(60);
-        okButton.setPrefWidth(75);
-        okButton.setOnAction(e->{
+        Button yesButton=new Button("Yes");
+        yesButton.setFont(new Font(15));
+        yesButton.setStyle("-fx-background-color: \tf5f5dc");
+        yesButton.setOnMousePressed(e-> yesButton.setEffect(new DropShadow()));
+        yesButton.setOnMouseReleased(e->yesButton.setEffect(null));
+        Button noButton=new Button("No");
+        noButton.setFont(new Font(15));
+        noButton.setStyle("-fx-background-color: \tf5f5dc");
+        noButton.setOnMousePressed(e->noButton.setEffect(new DropShadow()));
+        noButton.setOnMouseReleased(e->noButton.setEffect(null));
+        yesButton.setOnAction(e->{
+            i=true;
+        });
+        noButton.setOnAction(e->{
+            i=false;
             window.close();
             IMenu Imenu =new ButtonsDecorator(new BackgroundDecorator(new MainMenu()));
             Imenu=new LogoDecorator(Imenu);
@@ -51,12 +79,32 @@ public class AlertBox {
             Imenu.createlayout();
         });
 
-        AnchorPane layout  = new AnchorPane();
-        layout.getChildren().addAll(messageLabel1,messageLabel2,messageLabel3,okButton);
+        yesButton.setOnMouseEntered(e->{
+            yesButton.setEffect(new DropShadow());
+        });
 
-        Scene scene = new Scene(layout);
+        yesButton.setOnMouseExited(e->{
+            yesButton.setEffect(null);
+        });
+        noButton.setOnMouseEntered(e->{
+            noButton.setEffect(new DropShadow());
+        });
+
+        noButton.setOnMouseExited(e->{
+            noButton.setEffect(null);
+        });
+
+        HBox buttonsHbox=new HBox();
+        buttonsHbox.setAlignment(Pos.CENTER);
+        buttonsHbox.setSpacing(5);
+        buttonsHbox.getChildren().addAll(yesButton,noButton);
+        layout.setBottom(buttonsHbox);
+
+        Scene scene=new Scene(layout,300,150);
+        window.initStyle(StageStyle.UNDECORATED);
         window.setScene(scene);
         window.show();
-
+        return i;
     }
 }
+

@@ -1,4 +1,4 @@
-package sample;
+package Menu;
 
 import Menu.*;
 import javafx.application.Application;

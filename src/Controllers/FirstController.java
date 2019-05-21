@@ -114,7 +114,6 @@ public class FirstController implements GameActions {
                         AudioDecorator.mediaPlayer.stop();
                         gameTimer.stop();
                         stopTimer();
-                        theView.getPrimaryStage().close();
                         System.out.println("Your Score : " + gameScores.getGameScore());
                     }
                     buffer++;
@@ -217,7 +216,6 @@ public class FirstController implements GameActions {
                     saveHighScore();
                     gameTimer.stop();
                     stopTimer();
-                    theView.getPrimaryStage().close();
                     //Implement a GAMEOVER screen to display the game score of the player
                 }
             }
@@ -310,24 +308,20 @@ public class FirstController implements GameActions {
 
     public void initializeGameOverSequence(AlertBox alertBox){
         if(Integer.parseInt(theView.getHighScoreLabel().getText()) > 0) {
-            if (Integer.parseInt(theView.getHighScoreLabel().getText()) - gameScores.getGameScore() <= 5) {
-                alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Umm.. Thats Tuff XD");
-            } else if (Integer.parseInt(theView.getHighScoreLabel().getText()) - gameScores.getGameScore() > 50) {
-                alertBox.display("GameOver..", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "So I guess you weren't even trying this time");
-            } else
-                alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Better luck next time");
-        }
-        else
-            alertBox.display("GameOver", "Your Score : " + gameScores.getGameScore(), "HighScore was : " + theView.getHighScoreLabel().getText(), "Better luck next time");
+            if (alertBox.display(gameScores.getGameScore(),"\uD835\uDCE8\uD835\uDCF8\uD835\uDCFE\uD835\uDCFB \uD835\uDCD1\uD835\uDCEE\uD835\uDCFC\uD835\uDCFD \uD835\uDCE2\uD835\uDCEC\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE \uD835\uDCE6\uD835\uDCEA\uD835\uDCFC " +theView.getHighScoreLabel().getText()))
+                resetGame();
+            else
+                this.theView.getPrimaryStage().close();
 
-    }
+    }}
 
     public void newHighScoreSequence(AlertBox alertBox){
-        if(Integer.parseInt(theView.getHighScoreLabel().getText()) > 0) {
-            alertBox.display("Game Over", "You lost,But you beat the highScore", "New HighScore : " + gameScores.getGameScore(), "Great Job!!");
+        if(Integer.parseInt(theView.getHighScoreLabel().getText()) <= 0) {
+            if(alertBox.display(gameScores.getGameScore(),"\uD835\uDCE3\uD835\uDCF1\uD835\uDCF2\uD835\uDCFC \uD835\uDCF2\uD835\uDCFC \uD835\uDCD1\uD835\uDCEE\uD835\uDCFC\uD835\uDCFD \uD835\uDCE2\uD835\uDCEC\uD835\uDCF8\uD835\uDCFB\uD835\uDCEE " +Integer.toString(gameScores.getGameScore())))
+                resetGame();
+            else
+                this.theView.getPrimaryStage().close();
         }
-        else
-            alertBox.display("Game Over", "New HighScore : " + gameScores.getGameScore(), "Try to beat it next time" , " ");
 
     }
 
